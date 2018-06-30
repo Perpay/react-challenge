@@ -1,0 +1,53 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    left: 0;
+    right: 0;
+    position: fixed;
+    bottom: 0;
+    top: 75px; // Make a constant for header
+
+    .loginContentWrapper {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin: 10px;
+    }
+
+    .loginApplication {
+        border: 1px solid black;
+        padding: 30px 20px;
+        min-width: 300px;
+
+        .formContainer {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            flex-basis: 0;
+
+            .formRow {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .submitForm {
+                padding: 15px 0;
+                color: white;
+                background-color: #367abb;
+                text-align: center;
+                padding: 10px;
+                height: 50px;
+
+                &:hover {
+                    background-color: #5895cf;
+                }
+            }
+        }
+
+        .forgotContainer {
+            margin: 10px 0;
+            text-align: center;
+        }
+    }
+}

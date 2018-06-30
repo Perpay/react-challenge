@@ -1,0 +1,38 @@
+.buyingPowerContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    flex-basis: 0;
+
+
+    .buyingPowerWrapper {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .totalBuyingPower {
+        display: flex;
+        flex-grow: 1;
+        flex-basis: 0;
+        text-align: center;
+        flex-direction: column;
+        justify-content: center;
+
+        .totalText {
+            font-size: 5vw;
+        }
+
+        .totalLabel {
+            font-size: 2vw;
+        }
+    }
+
+    .buyingPowerSummary {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        font-size: 2vw;
+    }
+
+}

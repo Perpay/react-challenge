@@ -1,0 +1,23 @@
+.creditStatusContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    flex-grow: 1;
+    flex-basis: 0;
+
+    .creditStatusWrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .creditStatusResult {
+        font-size: 5vw;
+        color: lightgreen;
+        text-transform: uppercase;
+    }
+
+    .creditStatusTitle {
+        font-size: 3vw;
+    }
+}

@@ -1,0 +1,18 @@
+.formRow {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 5px 5px 20px 5px;
+
+    .errorInput {
+        border-bottom : 1px solid red;
+    }
+
+    .errorsContainer {
+        color: red;
+        height: 100%;
+    }
+
+    .helperText {
+        margin-bottom: 10px;
+    }
+}

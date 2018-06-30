@@ -1,0 +1,33 @@
+.dashboardContainer {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 0;
+
+    .dashboardRow {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+        flex-basis: 0;
+
+        .dashboardContainer {
+            flex-grow: 1;
+            flex-basis: 0;
+            text-decoration: none;
+            color: black;
+        }
+    }
+
+    .transactionsContainer {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 3;
+        flex-basis: 0;
+
+        .transactionsTitle {
+            font-size: 3vw;
+            margin: 20px 0;
+        }
+
+    }
+}

@@ -1,0 +1,15 @@
+.containerContainer {
+    margin: 10px;
+    border: 1px solid black;
+    border-radius: 7px;
+    position: relative;
+
+    &.withPadding {
+        padding: 10px 20px;
+    }
+
+    .headerContainer {
+        font-size: 24px;
+        font-weight: bold;
+    }
+}
