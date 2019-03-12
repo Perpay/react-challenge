@@ -57,17 +57,24 @@ export const customAjax = (method, url, body) => {
             });
         };
 
-        if (isAccessTokenExpired(tokens) && !isRefreshTokenExpired(tokens)) {
-            return ajax({
-                method: 'POST',
-                url: REFRESH_ENDPOINT,
-                body: JSON.stringify({ refresh: tokens.refresh.token }),
-                headers
-            }).flatMap(results => {
-                const newTokens = Object.assign({}, tokens, decodeTokens(results.response));
-                storeToken(newTokens);
-                return intendedCall(newTokens);
-            });
+        if (isAccessTokenExpired(tokens)) {
+            if (isRefreshTokenExpired(tokens)) {
+                return [push('/login')];
+            } else {
+                const refreshHeaders = Object.assign({}, headers, {
+                    'Authorization': `Bearer ${tokens.refresh.token}`
+                });
+
+                return ajax({
+                    method: 'POST',
+                    url: REFRESH_ENDPOINT,
+                    headers: refreshHeaders,
+                }).flatMap(results => {
+                    const newTokens = Object.assign({}, tokens, decodeTokens(results.response));
+                    storeToken(newTokens);
+                    return intendedCall(newTokens);
+                });
+            }
         } else {
             return intendedCall();
         }
