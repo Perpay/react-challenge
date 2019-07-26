@@ -13,7 +13,6 @@ import {
     isAccessTokenExpired,
     isRefreshTokenExpired,
 } from 'utils/tokenUtils';
-import { delay } from 'rxjs/operators';
 
 export const get = (url) => {
     return customAjax('GET', url);
