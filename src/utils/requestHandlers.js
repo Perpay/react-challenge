@@ -5,7 +5,7 @@ import {
     REFRESH_ENDPOINT,
 } from 'constants/urls';
 import { push } from 'react-router-redux';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {
     retrieveToken,
     storeToken,
@@ -13,6 +13,7 @@ import {
     isAccessTokenExpired,
     isRefreshTokenExpired,
 } from 'utils/tokenUtils';
+import { delay } from 'rxjs/operators';
 
 export const get = (url) => {
     return customAjax('GET', url);
@@ -25,6 +26,9 @@ export const post = (url, payload) => {
 export const put = (url, payload) => {
     return customAjax('PUT', url, payload);
 }
+
+let authCall = null
+let firstCall = true
 
 export const customAjax = (method, url, body) => {
     const whitelistUrls = [
@@ -57,7 +61,21 @@ export const customAjax = (method, url, body) => {
             });
         };
 
-        if (isAccessTokenExpired(tokens)) {
+        if (authCall) {
+            let delayedCall = new Subject()
+
+            authCall.subscribe(() => {
+                intendedCall(retrieveToken())
+                    .subscribe((result) => {
+                        delayedCall.next(result)
+                    })
+            })
+
+            return delayedCall
+        }
+
+        if (isAccessTokenExpired(tokens) || firstCall) {
+            firstCall = false
             if (isRefreshTokenExpired(tokens)) {
                 return [push('/login')];
             } else {
@@ -65,6 +83,7 @@ export const customAjax = (method, url, body) => {
                     'Authorization': `Bearer ${tokens.refresh.token}`
                 });
 
+                authCall = new Subject(() => {})
                 return ajax({
                     method: 'POST',
                     url: REFRESH_ENDPOINT,
@@ -72,8 +91,10 @@ export const customAjax = (method, url, body) => {
                 }).flatMap(results => {
                     const newTokens = Object.assign({}, tokens, decodeTokens(results.response));
                     storeToken(newTokens);
+                    authCall.next(true)
+                    authCall = null
                     return intendedCall(newTokens);
-                });
+                })
             }
         } else {
             return intendedCall();

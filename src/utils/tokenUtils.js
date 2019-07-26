@@ -39,6 +39,8 @@ export function decodeTokens(tokens) {
 }
 
 export function isAccessTokenExpired(state) {
+    // uncomment this to reproduce the issue
+    // return true
     if (state.access && state.access.payload.exp) {
         return 1000 * state.access.payload.exp - (new Date()).getTime() < 5000;
     }
